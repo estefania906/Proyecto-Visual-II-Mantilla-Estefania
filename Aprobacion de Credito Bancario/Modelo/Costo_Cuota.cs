@@ -19,7 +19,9 @@ namespace Modelo
         public double NumeroCuotas { get; set; }
         public Cliente Cliente { get; set; }
         public int ClienteId { get; set; }
-
+        public VigenciaTasaAnual VigenciaTasaAnual { get; set; }
+        public int VigenciaTasaAnaulId { get; set; }
+        public List<Credito> Credito { get; set; }
 
     }
 }

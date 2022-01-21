@@ -17,9 +17,10 @@ namespace Modelo
         public double CantidadPagada { get; set; }
         public double CantidadSolicitada { get; set; }
         public double Saldo { get; set; }
-        public bool DiasRetrasoGarante { get; set; }
+        public int DiasRetrasoGarante { get; set; }
 
-        public Garante_Det Garante_Det { get; set; }
-        public int GaranteDetId { get; set; }
+        public Garante Garante { get; set; }
+        public int GaranteId { get; set; }
+        public List<Validaciones> Validaciones { get; set; }
     }
 }

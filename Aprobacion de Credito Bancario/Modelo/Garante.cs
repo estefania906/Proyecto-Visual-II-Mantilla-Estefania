@@ -19,9 +19,12 @@ namespace Modelo
         public List<Garante_Det> Garante_Det { get; set; }
 
         public Cliente Cliente { get; set; }
-        public int ClienteId { get; set; }
+   
 
         //La relacion con declaracion patrimonio cliente
 
+        public List<Historial_Garante> Historial_Garante { get; set; }
+
+       
     }
 }

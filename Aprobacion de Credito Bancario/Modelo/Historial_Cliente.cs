@@ -17,10 +17,11 @@ namespace Modelo
         public double CantidadPagada { get; set; }
         public double CantidadSolicitada { get; set; }
         public double Saldo { get; set; }
-        public bool DiasRetrasoCliente { get; set; }
+        public int DiasRetrasoCliente { get; set; }
 
-        public Cliente_Det Cliente_Det { get; set; }
-        public int ClienteDetId { get; set; }
+        public Cliente Cliente { get; set; }
+        public int ClienteId { get; set; }
+        public List<Validaciones> Validaciones { get; set; }
 
     }
 }

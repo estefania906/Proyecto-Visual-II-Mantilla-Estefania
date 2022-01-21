@@ -13,10 +13,13 @@ namespace Modelo
         public int ClienteDetId { get; set; }
         public Cliente Cliente { get; set; }
         public int ClienteId { get; set; }
-        public List<Declaracion_Patrimonio_Cliente> Declaracion_Patrimonio_Cliente { get; set; }
-        public List<Comportamiento_Cliente> Comportamiento_Cliente { get; set; }
-        public List<Historial_Cliente> Historial_Cliente { get; set; }
-        public List<Gastos_Cliente> Gasto_Cliente { get; set; }
+        public double AvaluoBienParticular { get; set; }
+        public double Deuda_otros_bancos { get; set; }
+        public double Gastos_cliente { get; set; }
+        public double ingreso_mensual_cliente { get; set; }
+
+
+        
         public List<Costo_Cuota> Costo_Cuota { get; set; }
 
 

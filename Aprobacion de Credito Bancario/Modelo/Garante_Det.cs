@@ -13,9 +13,11 @@ namespace Modelo
         public int GaranteDetId { get; set; }
         public Garante Garante { get; set; }
         public int GaranteId { get; set; }
-        public List<Declaracion_Patrimonio_Garante> Declaracion_Patrimonio_Garante { get; set; }
-        public List<Comportamiento_Garante> Comportamiento_Garante { get; set; }
-        public List<Historial_Garante> Historial_Garante { get; set; }
+        public double AvaluoBienParticular { get; set; }
+        public double Deuda_otros_bancos { get; set; }
+        public double Gastos_garante { get; set; }
+        public double ingreso_mensual_garante { get; set; }
+        public List<Validaciones> Validaciones { get; set; }
 
     }
 }
