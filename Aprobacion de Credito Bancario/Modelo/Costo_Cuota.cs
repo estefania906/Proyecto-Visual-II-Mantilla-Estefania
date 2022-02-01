@@ -14,6 +14,7 @@ namespace Modelo
         public double CalculoCuota { get; set; }
         public double CalculoAmortizacion { get; set; }
         public double TasaAnual { get; set; }
+        public double InteresMensual { get; set; }
         public double CalculoPagoTotal { get; set; }
         public double MontoSolicitado { get; set; }
         public double NumeroCuotas { get; set; }

@@ -27,8 +27,8 @@ namespace Modelo
         public Cliente Cliente { get; set; }
         public int ClienteId { get; set; }
 
-        public Garante_Det Garante_Det { get; set; }
-        public int GaranteDetId { get; set; }
+        public Garante Garante { get; set; }
+        public int GaranteId { get; set; }
 
         public Historial_Cliente Historial_Cliente { get; set; }
         public int HistorialClienteId { get; set; }

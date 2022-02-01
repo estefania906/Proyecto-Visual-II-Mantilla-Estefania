@@ -17,7 +17,7 @@ namespace Modelo
         public double Deuda_otros_bancos { get; set; }
         public double Gastos_garante { get; set; }
         public double ingreso_mensual_garante { get; set; }
-        public List<Validaciones> Validaciones { get; set; }
+       
 
     }
 }

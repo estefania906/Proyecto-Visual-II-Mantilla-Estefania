@@ -9,8 +9,20 @@ using Microsoft.Data.SqlClient;
 
 namespace ModeloDB
 {
+    
     public class ModeloDB : DbContext
     {
+        public ModeloDB()
+        {
+
+        }
+
+        public ModeloDB(DbContextOptions options)
+            : base(options)
+        {
+
+        }
+      
         public DbSet<Cliente> cliente { get; set; }
         public DbSet<Cliente_Det> cliente_det { get; set; }
         public DbSet<VigenciaTasaAnual> vigencia { get; set; }
@@ -22,16 +34,18 @@ namespace ModeloDB
         public DbSet<Validaciones> validaciones { get; set; }
         public DbSet<Historial_Cliente> historial_cliente { get; set; }
         public DbSet<Historial_Garante> historial_garante { get; set; }
-
-        override protected void OnConfiguring(DbContextOptionsBuilder options)
+        
+       override protected void OnConfiguring(DbContextOptionsBuilder options)
 
         {
-   
-            
-            options.UseSqlServer("Server = ACER\\MSSQLSERVER2; initial catalog= Credito ; trusted_connection=true;");
-            
-        }
 
+            if (!options.IsConfigured)
+            {
+
+                options.UseSqlServer("Server = ACER\\MSSQLSERVER2; initial catalog= Credito ; trusted_connection=true;");
+            }
+        }
+       
         override protected void OnModelCreating(ModelBuilder modelBuilder)
         {
             // Cliente_Det 1 : n
@@ -86,10 +100,10 @@ namespace ModeloDB
 
             // Validaciones
             modelBuilder.Entity<Validaciones>()
-                .HasOne(validaciones => validaciones.Garante_Det)
-                .WithMany(garante_det => garante_det.Validaciones)
+                .HasOne(validaciones => validaciones.Garante)
+                .WithMany(garante => garante.Validaciones)
                 .OnDelete(DeleteBehavior.NoAction)
-                .HasForeignKey(validaciones => validaciones.GaranteDetId);
+                .HasForeignKey(validaciones => validaciones.GaranteId);
 
             // Validaciones
             modelBuilder.Entity<Validaciones>()

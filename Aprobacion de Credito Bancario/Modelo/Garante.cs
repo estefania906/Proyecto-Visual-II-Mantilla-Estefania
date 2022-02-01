@@ -25,6 +25,6 @@ namespace Modelo
 
         public List<Historial_Garante> Historial_Garante { get; set; }
 
-       
+        public List<Validaciones> Validaciones { get; set; }
     }
 }

@@ -4,7 +4,7 @@ using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Microsoft.Data.SqlClient;
+//using Microsoft.Data.SqlClient;
 using Modelo;
 
 
@@ -57,35 +57,43 @@ namespace Helpers
             this.historial_garante = historial_garante;
 
         }
-        public double CalCuota(){
 
-            double c = costo_cuota.MontoSolicitado * CalTasaInteres()*(1-(1/(Math.Pow(1+CalTasaInteres(),1/2))));
+        public double CalCuota(){
+            double a = Math.Pow(((1 + (costo_cuota.TasaAnual) / 100)), 0.083);
+            double d = 1 / costo_cuota.NumeroCuotas;
+            double c = costo_cuota.MontoSolicitado * a  *(1-(1/(Math.Pow(1 + a,d))));
             return c;
 
         }
 
        public double CalAmortizacion ()
         {
+            double a = Math.Pow(((1 + (costo_cuota.TasaAnual) / 100)), 0.083);
+            double d = 1 / costo_cuota.NumeroCuotas;
+            double c = costo_cuota.MontoSolicitado * a * (1 - (1 / (Math.Pow(1 + a, d))));
 
-        
-            double a = CalCuota() - (CalTasaInteres() * costo_cuota.MontoSolicitado);
-            return a;
+            double f = c - ((a / 100) * costo_cuota.MontoSolicitado);
+            return f;
 
 
         }
 
         public double CalTasaInteres()
         {
-
-            double t = 1 - (Math.Pow((1 + costo_cuota.TasaAnual), 1/12));
-            return t;
-
+            double r = ((Math.Pow (((1 + (costo_cuota.TasaAnual) / 100)) , 0.083))-1)*100;
+           
+            return r;
+            
 
         }
         public double CalPagoMensual()
         {
 
-            double p = CalAmortizacion() + (CalTasaInteres() * 100) + 10;
+            double a = Math.Pow(((1 + (costo_cuota.TasaAnual) / 100)), 0.083);
+            double d = 1 / costo_cuota.NumeroCuotas;
+            double c = costo_cuota.MontoSolicitado * a * (1 - (1 / (Math.Pow(1 + a, d))));
+            double f = c - ((a / 100) * costo_cuota.MontoSolicitado);
+            double p = f + (a*100) + 10;
             return p;
 
 
@@ -94,40 +102,39 @@ namespace Helpers
         public double CalPatrimonio()
         {
 
-            double dp =  costo_cuota.MontoSolicitado * 0.04;
+            double dp =  costo_cuota.MontoSolicitado * 0.4;
             return dp;
-
-
         }
 
-        public bool ValPatrimonioCliente()
+        public bool ValPatrimonioCliente(double p)
         {
-            bool ag ;
-            ag = cliente_det.AvaluoBienParticular == CalPatrimonio() ;
+            bool ag  ;
+            ag = (cliente_det.AvaluoBienParticular >= p);
             return ag;
         }
-
-        public bool ValPatrimonioGarante()
+    
+        public bool ValPatrimonioGarante(double p)
         {
             bool pg;
-            pg = garante_det.AvaluoBienParticular == CalPatrimonio();
+         
+            pg = garante_det.AvaluoBienParticular >= p;
             return pg;
         }
 
         public bool ValComportamientoCliente()
         {
             bool cc;
-            cc = (cliente_det.Deuda_otros_bancos + cliente_det.Gastos_cliente) == (0.4 * cliente_det.ingreso_mensual_cliente);
+            cc = (0.4 * cliente_det.ingreso_mensual_cliente) >= (cliente_det.Deuda_otros_bancos + cliente_det.Gastos_cliente);
             return cc;
         }
 
         public bool ValComportamientoGarante()
         {
             bool cg;
-            cg = (garante_det.Deuda_otros_bancos + garante_det.Gastos_garante) == (0.4 * garante_det.ingreso_mensual_garante);
+            cg = (0.4 * garante_det.ingreso_mensual_garante) >= (garante_det.Deuda_otros_bancos + garante_det.Gastos_garante)  ;
             return cg;
         }
-        public int CalFechaCliente() {
+      /*  public int CalFechaCliente() {
 
             int cf;
             cf = Convert.ToInt32(historial_cliente.FechaPagoSolicitada - historial_cliente.FechaPagoReal) ;
@@ -141,7 +148,7 @@ namespace Helpers
             cf = Convert.ToInt32(historial_garante.FechaPagoSolicitada - historial_garante.FechaPagoReal) ;
             return cf;
 
-        }
+        }*/
 
         /*public int sum()
         {
@@ -174,7 +181,7 @@ namespace Helpers
         public bool ValHistorialCliente()
         {
             bool cg;
-            cg = (historial_cliente.DiasRetrasoCliente)>7;
+            cg = (historial_cliente.DiasRetrasoCliente)<7;
             return cg;
 
 
@@ -183,7 +190,7 @@ namespace Helpers
         public bool ValHistorialGarante()
         {
             bool cg;
-            cg = (historial_garante.DiasRetrasoGarante) > 7;
+            cg = (historial_garante.DiasRetrasoGarante) < 7;
             return cg;
 
 
